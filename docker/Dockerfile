@@ -22,7 +22,6 @@ RUN mvn package -Dmaven.test.skip=true
 RUN grep version /home/jboss/target/maven-archiver/pom.properties | cut -d '=' -f2 >.env-version
 RUN grep artifactId /home/jboss/target/maven-archiver/pom.properties | cut -d '=' -f2 >.env-id
 RUN mv /home/jboss/target/$(cat .env-id)-$(cat .env-version).jar /home/jboss/target/export-run-artifact.jar
-RUN yum -y install wget
 
 FROM registry.access.redhat.com/ubi8/openjdk-17-runtime:1.15
 COPY --from=builder /home/jboss/target/export-run-artifact.jar  /deployments/export-run-artifact.jar
